@@ -1,16 +1,6 @@
-/*
-Modelar al dueño y a los dos empleados,
-de forma tal que se pueda indicar: 
-un cambio de sueldo de Galván, 
-la venta de empanadas por parte de Baigorria, 
-el pago de sueldo de cualquiera de los dos empleados. 
-Y se pueda preguntar: 
-el sueldo de Baigorria, y el importe actual en el fondo de Giménez
-*/
-
 object baigorria{
 	var empanadasVendidas = 0;
-	var cajaDeAhorro = 0; 
+	var dinero = 0; 
 	
 	method vender(cantidadDeEmpanadas){
 		empanadasVendidas += cantidadDeEmpanadas;
@@ -20,15 +10,21 @@ object baigorria{
 		return empanadasVendidas*15;
 	}
 	
+	method cobrar(sueldo){
+		dinero+=sueldo;
+	}
+	
 	method totalCobrado(){
-		cajaDeAhorro += self.sueldo();
+		dinero += self.sueldo();
 		empanadasVendidas = 0;
-		return cajaDeAhorro
+		return dinero
 	}
 }
 
 object galvan{
 	var sueldoActual = 15000;
+	var deuda=0;
+	var dinero=0;
 	
 	method sueldo(nuevoSueldo){
 		sueldoActual = nuevoSueldo;
@@ -37,6 +33,42 @@ object galvan{
 	method sueldo(){
 		return sueldoActual;
 	}
+	
+	method cobrar(sueldo){
+		dinero = sueldo;
+		
+		deuda = deuda - dinero;
+		
+		dinero = -(deuda);
+		
+		if(deuda < 0){
+			deuda = 0;
+		}
+		
+		if(dinero < 0){
+			dinero = 0;
+		}
+	}
+
+	method gastar(cuanto){
+		deuda = deuda + cuanto;
+		
+		deuda = deuda - dinero;
+		
+		dinero = dinero - cuanto;
+		
+		if(dinero < 0){
+			dinero = 0;
+		}
+	} 
+	
+	method dinero(){
+		return dinero 
+	}
+	
+	method deuda(){
+		return deuda 
+	} 
 }
 
 object gimenez{
@@ -44,6 +76,7 @@ object gimenez{
 	
 	method pagarSueldo(empleado){
 		fondo -= empleado.sueldo()
+		empleado.cobrar(empleado.sueldo())
 	}
 	
 	method fondo(){
