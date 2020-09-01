@@ -10,15 +10,20 @@ el sueldo de Baigorria, y el importe actual en el fondo de Giménez
 
 object baigorria{
 	var empanadasVendidas = 0;
-	var sueldoActual= 0; 
+	var cajaDeAhorro = 0; 
 	
 	method vender(cantidadDeEmpanadas){
-		empanadasVendidas = cantidadDeEmpanadas;
-		sueldoActual+= empanadasVendidas*15;
+		empanadasVendidas += cantidadDeEmpanadas;
 	}
 	
 	method sueldo(){
-		return sueldoActual
+		return empanadasVendidas*15;
+	}
+	
+	method totalCobrado(){
+		cajaDeAhorro += self.sueldo();
+		empanadasVendidas = 0;
+		return cajaDeAhorro
 	}
 }
 
