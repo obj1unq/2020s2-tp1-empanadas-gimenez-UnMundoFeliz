@@ -10,13 +10,13 @@ object baigorria{
 		return empanadasVendidas*15;
 	}
 	
-	method cobrar(sueldo){
-		dinero+=sueldo;
+	method cobrar(){
+		dinero+=self.sueldo();
+		
+		empanadasVendidas = 0;
 	}
 	
 	method totalCobrado(){
-		dinero += self.sueldo();
-		empanadasVendidas = 0;
 		return dinero
 	}
 }
@@ -34,8 +34,8 @@ object galvan{
 		return sueldoActual;
 	}
 	
-	method cobrar(sueldo){
-		dinero = sueldo;
+	method cobrar(){
+		dinero += self.sueldo();
 		
 		deuda = deuda - dinero;
 		
@@ -76,7 +76,7 @@ object gimenez{
 	
 	method pagarSueldo(empleado){
 		fondo -= empleado.sueldo()
-		empleado.cobrar(empleado.sueldo())
+		empleado.cobrar()
 	}
 	
 	method fondo(){
